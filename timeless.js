@@ -30,14 +30,14 @@
 	var mDay = 1000 * 60 * 60 * 24;
 	var dispatch = ['toLocaleString', 'toLocaleDateString', 'toDateString', 'toString'];
 
-	getLastDayOfMonth = function(date){
+	function getLastDayOfMonth(date){
 		var tDate = copyDate(date);
  		tDate.setDate(1);
  		tDate.setMonth(tDate.getMonth() + 1);
  		tDate.setDate(0);
  		return tDate.getDate();
  	}
- 	getLastDayOfYear = function(date){
+ 	function getLastDayOfYear(date){
 		var tDate = copyDate(date);
  		tDate.setDate(1);
  		tDate.setMonth(0);
@@ -45,29 +45,29 @@
  		tDate.setDate(0);
  		return getDayOfYear(tDate);
  	}
- 	getDayOfYear = function(date){
+ 	function getDayOfYear(date){
 		var tDate = copyDate(date);
  		tDate.setDate(1);
  		tDate.setMonth(0);
  		tDate.setDate(0);
  		return Math.round(((date.millis || date.getTime).call(date) - tDate.getTime()) / mDay);
  	}
- 	getDayOfWeek = function(date){
+ 	function getDayOfWeek(date){
  		return copyDate(date).getDay() || 7;
  	}
- 	getWeekOfYear = function(date){
+ 	function getWeekOfYear(date){
  		var tDate = copyDate(date);
  		tDate.setDate(tDate.getDate() + 4 - getDayOfWeek(date))
  		return Math.ceil(((tDate - new Date(tDate.getFullYear(), 0, 1)) / mDay + 1) / 7);
  	}
- 	diff = function(date, diffDate){
+ 	function diff(date, diffDate){
  		var tDate = copyDate(date);
 		var tDiffDate = copyDate(diffDate);
 		tDate.setHours(0, 0, 0, 0);
 		tDiffDate.setHours(0, 0, 0, 0);
 		return Math.round((tDiffDate.getTime() - tDate.getTime()) / mDay);
  	}
- 	monthDiff = function(date, diffDate){
+ 	function monthDiff(date, diffDate){
  		var tDate = copyDate(date);
 		var tDiffDate = copyDate(diffDate);
  		return (tDiffDate.getFullYear() * 12 + tDiffDate.getMonth()) -
@@ -211,17 +211,17 @@
 		return new Date(date);
 	}
 
-	var Exception = function(n, m){
+	function Exception(n, m){
 		return {
 			name: n,
 			message: m,
 			toString: function(){return n + ': ' + m}
 		}
 	}
-	var OutOfRangeException = function(m){
+	function OutOfRangeException(m){
 		return Exception('OutOfRangeException', m);
 	}
-	var IllegalArgumentException = function(m){
+	function IllegalArgumentException(m){
 		return Exception('IllegalArgumentException', m);
 	}
 

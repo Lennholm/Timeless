@@ -173,6 +173,21 @@
  		this.monthDiff = function(diffDate){
  			return monthDiff(timeless, diffDate);
  		}
+ 		this.eq = function(diffDate){
+ 			return diff(timeless, diffDate) === 0;
+ 		}
+ 		this.lt = function(diffDate){
+ 			return diff(timeless, diffDate) > 0;
+ 		}
+ 		this.gt = function(diffDate){
+ 			return diff(timeless, diffDate) < 0;
+ 		}
+ 		this.lte = function(diffDate){
+ 			return diff(timeless, diffDate) >= 0;
+ 		}
+ 		this.gte = function(diffDate){
+ 			return diff(timeless, diffDate) <= 0;
+ 		}
  		for (var i = 0; i < dispatch.length; i++){
  			this[dispatch[i]] = (function(m){
  				return function(){
@@ -214,7 +229,7 @@
 		return (date.year || date.getFullYear).call(date);
 	}
 	Timeless.monthOfYear = function(date){
-		return new Timeless(date).monthOfYear();
+		return date instanceof Timeless ? date.monthOfYear() : new Date(date).getMonth() + 1;
 	}
 	Timeless.dayOfMonth = function(date){
 		return (date.dayOfMonth || date.getDate).call(date);

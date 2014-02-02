@@ -205,7 +205,7 @@ Copyright (c) 2014 Mikael Lennholm */
 	function withPeriod(date, uPeriod, value){
 		if (isNaN(value))
 			throw IllegalArgumentException('argument is not a number');
-		var tDate = new Date(date);
+		var tDate = copyDate(date);
 		uPeriod.set.call(tDate, value);
  		return new Timeless(tDate);
 	}

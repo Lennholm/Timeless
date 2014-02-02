@@ -1,8 +1,31 @@
 ;(function(){
+	function safeSet(setter, value){
+		var currentDay = this.getDate();
+		this.setDate(1);
+		this[setter](value);
+		this.setDate(Math.min(currentDay, getLastDayOfMonth(this)));
+	}
 	var period = {
-		YEAR: {set: 'setFullYear'},
- 		MONTH: {set: 'setMonth'},
- 		DAY: {set: 'setDate'}
+		YEAR: {
+			set: function(y){
+				safeSet.call(this, 'setFullYear', y);
+			}
+		},
+ 		MONTH: {
+ 			set: function(m){
+ 				safeSet.call(this, 'setMonth', m);
+			}
+		},
+ 		DAY: {
+ 			set: function(d){
+ 				this.setDate(d);
+ 			}
+ 		},
+ 		WEEK: {
+ 			set: function(w){
+ 				period.DAY.set.call(this, this.getDate() + (w - getWeekOfYear(this)) * 7);
+ 			}
+ 		}
 	}
 	var mDay = 1000 * 60 * 60 * 24;
 	var dispatch = ['toLocaleString', 'toLocaleDateString', 'toDateString', 'toString'];
@@ -99,7 +122,7 @@
  		this.withWeekOfYear = function(week){
  			if (week < 1 || week > 53)
  				throw new OutOfRangeException('weekOfYear out of range');
- 			return withPeriod(timeless, period.DAY, timeless.getDate() + (week - weekOfYear) * 7);
+ 			return withPeriod(timeless, period.WEEK, week);
  		}
  		this.plusYears = function(years){
  			return withPeriod(timeless, period.YEAR, timeless.getFullYear() + parseInt(years));
@@ -111,7 +134,7 @@
  			return withPeriod(timeless, period.DAY, timeless.getDate() + parseInt(days));
  		}
  		this.plusWeeks = function(weeks){
- 			return withPeriod(timeless, period.DAY, timeless.getDate() + parseInt(weeks) * 7);
+ 			return withPeriod(timeless, period.WEEK, weekOfYear + parseInt(weeks));
  		}
 
  		this.lastDayOfMonth = function(){
@@ -164,13 +187,7 @@
 		if (isNaN(value))
 			throw IllegalArgumentException('argument is not a number');
 		var tDate = new Date(date);
- 		if (uPeriod !== period.DAY){
-	 		var currentDay = tDate.getDate();
- 			tDate.setDate(1);
- 			tDate[uPeriod.set](value);
- 			value = Math.min(currentDay, Timeless.lastDayOfMonth(tDate));
- 		}
- 		tDate.setDate(value);
+		uPeriod.set.call(tDate, value);
  		return new Timeless(tDate);
 	}
 	function copyDate(date){

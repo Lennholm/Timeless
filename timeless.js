@@ -1,3 +1,7 @@
+/*! Released under the MIT License (MIT)
+ 
+Copyright (c) 2014 Mikael Lennholm */
+
 ;(function(){
 	function safeSet(setter, value){
 		var currentDay = this.getDate();

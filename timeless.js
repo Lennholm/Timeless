@@ -17,7 +17,7 @@ Copyright (c) 2014 Mikael Lennholm */
 		},
  		MONTH: {
  			set: function(m){
- 				safeSet.call(this, 'setMonth', m);
+ 				safeSet.call(this, 'setMonth', m - 1);
 			}
 		},
  		DAY: {
@@ -103,7 +103,7 @@ Copyright (c) 2014 Mikael Lennholm */
  		this.withMonthOfYear = function(month){
  			if (month < 1 || month > 12)
  				throw new OutOfRangeException('monthOfYear out of range');
- 			return withPeriod(timeless, period.MONTH, month - 1);
+ 			return withPeriod(timeless, period.MONTH, month);
 		}
  		this.withDayOfMonth = function(day){
  			if (day < 1 || day > lastDayOfMonth)
@@ -113,7 +113,7 @@ Copyright (c) 2014 Mikael Lennholm */
  		this.withDayOfYear = function(day){
  			if (day < 1 || day > lastDayOfYear)
  				throw new OutOfRangeException('dayOfYear out of range');
- 			var tDate = new Date(timeless);
+ 			var tDate = copyDate(timeless);
  			tDate.setDate(1);
  			tDate.setMonth(0);
  			return withPeriod(tDate, period.DAY, day);
@@ -132,7 +132,7 @@ Copyright (c) 2014 Mikael Lennholm */
  			return withPeriod(timeless, period.YEAR, timeless.getFullYear() + parseInt(years));
  		}
  		this.plusMonths = function(months){
- 			return withPeriod(timeless, period.MONTH, timeless.getMonth() + parseInt(months));
+ 			return withPeriod(timeless, period.MONTH, timeless.getMonth() + 1 + parseInt(months));
  		}
  		this.plusDays = function(days){
  			return withPeriod(timeless, period.DAY, timeless.getDate() + parseInt(days));

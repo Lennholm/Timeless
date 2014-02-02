@@ -34,27 +34,27 @@ If *dayOfMonth* is higher than the last day of the month specified by *monthOfYe
 
 ##### `.year();` #####
 
-Returns an integer representing the year of the date.
+Returns an integer representing the year in the date.
 
 ##### `.monthOfYEar();` #####
 
-Returns an integer representing the month of the year with base 1. E.g. `new Timeless().monthOfYear() == 2` means the month of the instance is February.
+Returns an integer representing the month of the year in the date with base 1. E.g. `new Timeless().monthOfYear() == 2` means the month of the instance is February.
 
 ##### `.dayOfMonth();` #####
 
-Returns an integer representing the day of the month.
+Returns an integer representing the day of the month in the date.
 
 ##### `.dayOfYear();` #####
 
-Returns an integer representing the day of the year.
+Returns an integer representing the day of the year in the date.
 
 ##### `.dayOfWeek();` #####
 
-Returns an integer representing the day of the week where 1 represents Monday and 7 represents Sunday.
+Returns an integer representing the day of the week in the date where 1 represents Monday and 7 represents Sunday.
 
 ##### `.weekOfYear();` #####
 
-Returns the week no. of the date.
+Returns the week no. of the year in the date.
 
 ##### `.millis();`, `.milliseconds();` #####
 
@@ -74,15 +74,15 @@ The functionality of these methods are identical to their function on the *Date*
 
 #### Modifiers ####
 
-All modifiers throw a `IllegalArgumentException` if the argument is not a number.
+All modifier methods throw an `IllegalArgumentException` if the argument is not a number.
 
 ##### `.withYear(year);` #####
 
-Returns a new instance with the year specified by *year* while the monthOfYear and dayOfMonth will be preserved. If the dayOfMonth of the original instance is higher than the lastDayOfMonth in the new instance, the dayOfMonth will be set do lastDayOfMonth. E.g. `new Timeless("Mon Feb 29 2016").withYear(2014);` will return `Fri Feb 28 2014`.
+Returns a new instance with the year specified by *year* while the monthOfYear and dayOfMonth will be preserved. If the dayOfMonth of the original instance is higher than the lastDayOfMonth in the new instance, the dayOfMonth will be set to lastDayOfMonth. E.g. `new Timeless("Mon Feb 29 2016").withYear(2014);` will return `Fri Feb 28 2014`.
 
 ##### `.withMonthOfYear(month);` #####
 
-Returns a new instance with the monthOfYear specified by *month* while the year and dayOfMonth will be preserved. If the dayOfMonth of the original instance is higher than the lastDayOfMonth in the new instance, the dayOfMonth will be set do lastDayOfMonth. E.g. `new Timeless("Fri Jan 31 2014").withMonthOfYear(2);` will return `Fri Feb 28 2014`.
+Returns a new instance with the monthOfYear specified by *month* while the year and dayOfMonth will be preserved. If the dayOfMonth of the original instance is higher than the lastDayOfMonth in the new instance, the dayOfMonth will be set to lastDayOfMonth. E.g. `new Timeless("Fri Jan 31 2014").withMonthOfYear(2);` will return `Fri Feb 28 2014`.
 
 Throws an `OutOfRangeException` if *month* is less than 1 or greater than 12.
 
@@ -160,3 +160,50 @@ Returns true if the instance date is the same date as OR earlier than *compareDa
 
 Returns true if the instace date is the same date as OR later than *compareDate*, otherwise false.
 
+### As a utility ###
+
+Timeless can also be used as a utility instead of creating instance objects. All utility methods take one or two arguments that must be either a Timeless instance, a *Date* instance, an integer representing the milliseconds of a date or a date string. None of the methods modify the objects that are passed in.
+
+##### `Timeless.year(date);` #####
+
+Returns an integer representing the year in *date*.
+
+##### `Timeless.monthOfYear(date);` #####
+
+Returns an integer representing the month of the year in *date* with base 1.
+
+##### `Timeless.dayOfMonth(date);` #####
+
+Returns an integer representing the day of the month in *date*.
+
+##### `Timeless.dayOfYear(date);` #####
+
+Returns an integer representing the day of the year in *date*.
+
+##### `Timeless.dayOfWeek(date);` #####
+
+Returns an integer representing the day of the week in *date*.
+
+##### `Timeless.weekOfYear(date);` #####
+
+Returns the week no. of the year in *date*.
+
+##### `Timeless.lastDayOfMonth(date);` #####
+
+Returns the number of days in the month in *date*.
+
+##### `Timeless.lastDayOfYear(date);` #####
+
+Returns the number of days in the year in *date*.
+
+##### `Timeless.diff(date, diffDate);` #####
+
+Returns the number of days that differs between *date* and *diffDate*. The return is positive if *diffDate* is later than *date* and negative otherwise.
+
+##### `Timeless.monthDiff(date, diffDate);` #####
+
+Returns the number of months that differs between *date* and *diffDate* (see `.monthDiff(dateDiff);`).
+
+##### `Timeless.today();` #####
+
+Returns the milliseconds representing todays date at midnight.

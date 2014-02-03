@@ -1,5 +1,7 @@
-/*! Released under the MIT License (MIT)
- 
+/*! timeless.js
+http://github.com/Lennholm/Timeless.js
+
+Released under the MIT License (MIT)
 Copyright (c) 2014 Mikael Lennholm */
 
 ;(function(){
@@ -198,6 +200,9 @@ Copyright (c) 2014 Mikael Lennholm */
  					return timeless[m]();
  				}
  			})(dispatch[i]);
+ 		}
+ 		this.valueOf = function(){
+ 			return timeless.getTime();
  		}
  		return this;
 	}

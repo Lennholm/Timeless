@@ -88,7 +88,7 @@ Copyright (c) 2014 Mikael Lennholm */
 		if (y === undefined)
  			timeless = new Date();
  		else if (typeof d === 'number')
- 			timeless = new Date([y, d, m]);
+ 			timeless = new Date(y, d - 1, m);
  		else
  			timeless = copyDate(y);
  		timeless.setHours(0, 0, 0, 0);
